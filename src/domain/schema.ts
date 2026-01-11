@@ -1,6 +1,5 @@
 type Row = {
 	id: string;
-	name: string;
 	height: number; // px
 };
 
@@ -35,9 +34,23 @@ export type Schema = {
      * We store the col and row order in this way because:
      * - Reordering becomes a cheap operation. You just need to change the id's position in the array. 
      *   Very useful in reordering, restore previous order, save view etc.
+	 * 
+	 * To understand the below explanation consider these two approaches:
+	 * 
+	 * Traditional approach:
+	 * 	columns: Array<column>;
+	 * 	rows: Array<row>;
+	 * 
+	 * Split Approach:
+	 * 	colOrder: Array<ColumnId>;
+	 * 	rowOrder: Array<RowId>;
+	 * 
+	 * 	colsById: Record<ColumnId, Column>;
+	 * 	rowsById: Record<RowId, Row>;
+	 * 
      * - Metadata updates don’t affect ordering (and vice versa)
             Consider changing a column width:
-            Your approach: you update an object inside columns[]. 
+            Traditional approach: you update an object inside columns[]. 
             That’s fine, but if you also do reorder operations, 
             you’re constantly mutating the same structure for two orthogonal concerns.
             Split approach: width change updates colsById[colId], reorder only touches colOrder[].

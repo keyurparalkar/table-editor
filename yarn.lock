@@ -700,6 +700,14 @@
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.18.0"
 
+"@xstate/react@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@xstate/react/-/react-6.0.0.tgz#c103e0afb8da8b21c9b83338f37258946853e35d"
+  integrity sha512-xXlLpFJxqLhhmecAXclBECgk+B4zYSrDTl8hTfPZBogkn82OHKbm9zJxox3Z/YXoOhAQhKFTRLMYGdlbhc6T9A==
+  dependencies:
+    use-isomorphic-layout-effect "^1.1.2"
+    use-sync-external-store "^1.2.0"
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
@@ -1090,6 +1098,11 @@ ignore@^7.0.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-7.0.5.tgz#4cb5f6cd7d4c7ab0365738c7aea888baa6d7efd9"
   integrity sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==
 
+immer@^11.1.3:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-11.1.3.tgz#78681e1deb6cec39753acf04eb16d7576c04f4d6"
+  integrity sha512-6jQTc5z0KJFtr1UgFpIL3N9XSC3saRaI9PwWtzM2pSqkNGtiNkYY2OSwkOGDK2XcTRcLb1pi/aNkKZz0nxVH4Q==
+
 import-fresh@^3.2.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.1.tgz#9cecb56503c0ada1f2741dbbd6546e4b13b57ccf"
@@ -1448,6 +1461,16 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-isomorphic-layout-effect@^1.1.2:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.2.1.tgz#2f11a525628f56424521c748feabc2ffcc962fce"
+  integrity sha512-tpZZ+EX0gaghDAiFR37hj5MgY6ZN55kLiPkJsKxBMZ6GZdOSPJXiOzPM984oPYZ5AnehYx5WQp1+ME8I/P/pRA==
+
+use-sync-external-store@^1.2.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
+  integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==
 
 vite@^7.2.4:
   version "7.3.0"
