@@ -1,9 +1,16 @@
-import type { PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from "react";
 
-type GridHeaderProps = PropsWithChildren;
+type GridHeaderProps = PropsWithChildren & {
+	className?: string;
+	style?: CSSProperties;
+};
 
-const GridHeader = ({ children }: GridHeaderProps) => {
-	return <th>{children}</th>;
+const GridHeader = ({ children, className, style }: GridHeaderProps) => {
+	return (
+		<th className={className} style={style}>
+			{children}
+		</th>
+	);
 };
 
 export default GridHeader;

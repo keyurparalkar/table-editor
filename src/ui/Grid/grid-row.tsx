@@ -1,9 +1,16 @@
-import type { PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from "react";
 
-type GridRowProps = PropsWithChildren;
+type GridRowProps = PropsWithChildren & {
+	className?: string;
+	style?: CSSProperties;
+};
 
-const GridRow = ({ children }: GridRowProps) => {
-	return <tr>{children}</tr>;
+const GridRow = ({ children, className, style }: GridRowProps) => {
+	return (
+		<tr className={className} style={style}>
+			{children}
+		</tr>
+	);
 };
 
 export default GridRow;

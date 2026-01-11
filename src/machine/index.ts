@@ -44,11 +44,26 @@ const TableEditorMachine = setup({
 						acc[curr] = {
 							id: curr,
 							name: "",
-							width: 10,
+							width: 100,
 						};
 
 						return acc;
 					}, {} as MachineContext["schema"]["colsById"]);
+
+					/**
+					 * We define cells as well:
+					 */
+					draftSchema?.rowOrder?.forEach((rO) => {
+						draftSchema?.colOrder?.forEach((cO) => {
+							const cellKey =
+								`${rO}:${cO}` as keyof MachineContext["schema"]["cells"];
+
+							draftSchema.cells[cellKey] = {
+								kind: "empty",
+								value: "",
+							};
+						});
+					});
 				});
 			},
 		}),

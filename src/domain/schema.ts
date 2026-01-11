@@ -12,7 +12,7 @@ type Column = {
 type RowId = string;
 type ColumnId = string;
 
-type CellKey = `${RowId}:${ColumnId}`;
+export type CellKey = `${RowId}:${ColumnId}`;
 type CellValue =
 	| {
 			kind: "text";
@@ -24,6 +24,7 @@ type CellValue =
 	  }
 	| {
 			kind: "empty";
+			value: "";
 	  };
 
 export type Schema = {
