@@ -7,6 +7,9 @@ type UseGetTablePropertiesProps = {
 	actorRef: ActorRefFrom<typeof TableEditorMachine>;
 };
 
+/**
+ * A hook that provides helper functions for extracting properties from entities like col, row and cells
+ */
 export const useGetTableProperties = ({
 	actorRef,
 }: UseGetTablePropertiesProps) => {
