@@ -5,9 +5,9 @@ type GridHeaderProps = PropsWithChildren & {
 	style?: CSSProperties;
 };
 
-const GridHeader = ({ children, className, style }: GridHeaderProps) => {
+const GridHeader = ({ children, className, ...rest }: GridHeaderProps) => {
 	return (
-		<th className={className} style={style}>
+		<th className={className} {...rest}>
 			{children}
 		</th>
 	);

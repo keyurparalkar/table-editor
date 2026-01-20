@@ -1,65 +1,68 @@
-import { useMachine, useSelector } from "@xstate/react";
+import { useMachine } from "@xstate/react";
 import type { MachineInput } from "../../domain/input";
 import TableEditorMachine from "../../machine";
+import { useGetTableProperties } from "../../machine/hooks";
 import GridCell from "./grid-cell";
 import GridHeader from "./grid-header";
 import GridRow from "./grid-row";
-import type { CellKey } from "../../domain/schema";
 
 type TableEditorProps = MachineInput;
+
 const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
-	const [snapshot, send, actorRef] = useMachine(TableEditorMachine, {
+	const [, , actorRef] = useMachine(TableEditorMachine, {
 		input: {
 			defaultColumns,
 			defaultRows,
 		},
 	});
-	const { colOrder, colsById, rowOrder, rowsById, cells } = useSelector(
+
+	const {
+		rowOrder,
+		colOrder,
+		getCellKey,
+		getCellProperties,
+		getColumnProperties,
+		getRowProperties,
+	} = useGetTableProperties({
 		actorRef,
-		(s) => s.context.schema
-	);
+	});
 
 	return (
-		<>
-			<h2>Table</h2>
-			<table>
-				<thead>
-					<GridRow>
-						{colOrder?.map((c) => {
-							const colProps = colsById[c];
-							const width = colProps?.width;
-							return (
-								<GridHeader key={c} style={{ width }} className="border">
-									{c}
-								</GridHeader>
-							);
-						})}
-					</GridRow>
-				</thead>
-				<tbody>
-					{rowOrder?.map((r) => {
-						const rowProps = rowsById[r];
-						const height = rowProps?.height;
+		<table>
+			<thead>
+				<GridRow>
+					{colOrder?.map((c) => {
+						const { key, ...rest } = getColumnProperties(c);
 
 						return (
-							<GridRow key={r} style={{ height }}>
-								{colOrder?.map((c) => {
-									const cellKey = `${r}:${c}` as CellKey;
-									const cellProps = cells[cellKey];
-									const { value } = cellProps;
-
-									return (
-										<GridCell key={cellKey} className="border">
-											{value}
-										</GridCell>
-									);
-								})}
-							</GridRow>
+							<GridHeader key={key} className="border" {...rest}>
+								{c}
+							</GridHeader>
 						);
 					})}
-				</tbody>
-			</table>
-		</>
+				</GridRow>
+			</thead>
+			<tbody>
+				{rowOrder?.map((r) => {
+					const { key, ...rest } = getRowProperties(r);
+
+					return (
+						<GridRow key={r} {...rest}>
+							{colOrder?.map((c) => {
+								const cellKey = getCellKey(r, c);
+								const { key, value, ...rest } = getCellProperties(cellKey);
+
+								return (
+									<GridCell key={key} className="border" {...rest}>
+										{value}
+									</GridCell>
+								);
+							})}
+						</GridRow>
+					);
+				})}
+			</tbody>
+		</table>
 	);
 };
 

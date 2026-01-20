@@ -1,18 +1,21 @@
+import type { CSSProperties } from "react";
+
 type Row = {
 	id: string;
-	height: number; // px
+	style?: Partial<CSSProperties>;
 };
 
 type Column = {
 	id: string;
 	name: string;
-	width: number; // px
+	style?: Partial<CSSProperties>;
 };
 
-type RowId = string;
-type ColumnId = string;
+export type RowId = string;
+export type ColumnId = string;
 
 export type CellKey = `${RowId}:${ColumnId}`;
+
 type CellValue =
 	| {
 			kind: "text";
@@ -26,6 +29,12 @@ type CellValue =
 			kind: "empty";
 			value: "";
 	  };
+
+type CellMeta = {
+	style?: Omit<Partial<CSSProperties>, "width" | "height">;
+};
+
+type Cell = CellValue & CellMeta;
 
 export type Schema = {
 	version: number;
@@ -67,5 +76,5 @@ export type Schema = {
 	colsById: Record<ColumnId, Column>;
 	rowsById: Record<RowId, Row>;
 
-	cells: Record<CellKey, CellValue>;
+	cells: Record<CellKey, Cell>;
 };

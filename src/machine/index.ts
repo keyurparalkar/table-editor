@@ -31,24 +31,34 @@ const TableEditorMachine = setup({
 						.fill(0)
 						.map((_, i) => String(i));
 
-					draftSchema.rowsById = draftSchema.colOrder.reduce((acc, curr) => {
-						acc[curr] = {
-							id: curr,
-							height: 10,
-						};
+					draftSchema.rowsById = draftSchema.colOrder.reduce(
+						(acc, curr) => {
+							acc[curr] = {
+								id: curr,
+								style: {
+									height: 10,
+								},
+							};
 
-						return acc;
-					}, {} as MachineContext["schema"]["rowsById"]);
+							return acc;
+						},
+						{} as MachineContext["schema"]["rowsById"],
+					);
 
-					draftSchema.colsById = draftSchema.colOrder.reduce((acc, curr) => {
-						acc[curr] = {
-							id: curr,
-							name: "",
-							width: 100,
-						};
+					draftSchema.colsById = draftSchema.colOrder.reduce(
+						(acc, curr) => {
+							acc[curr] = {
+								id: curr,
+								name: "",
+								style: {
+									width: 100,
+								},
+							};
 
-						return acc;
-					}, {} as MachineContext["schema"]["colsById"]);
+							return acc;
+						},
+						{} as MachineContext["schema"]["colsById"],
+					);
 
 					/**
 					 * We define cells as well:

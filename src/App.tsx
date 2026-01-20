@@ -2,10 +2,11 @@ import TableEditor from "./ui/Grid/table-editor";
 
 function App() {
 	return (
-		<>
-			<h1>Table Editor </h1>
-			<TableEditor defaultColumns={2} defaultRows={2} />
-		</>
+		<div>
+			<h1 className="text-4xl font-bold text-gray-900">Table Editor</h1>
+			<br />
+			<TableEditor defaultColumns={3} defaultRows={2} />
+		</div>
 	);
 }
 
