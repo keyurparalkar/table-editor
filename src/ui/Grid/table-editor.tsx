@@ -9,7 +9,7 @@ import GridRow from "./grid-row";
 type TableEditorProps = MachineInput;
 
 const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
-	const [, , actorRef] = useMachine(TableEditorMachine, {
+	const [sp, , actorRef] = useMachine(TableEditorMachine, {
 		input: {
 			defaultColumns,
 			defaultRows,
@@ -26,6 +26,7 @@ const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
 	} = useGetTableProperties({
 		actorRef,
 	});
+	console.log({ sp });
 
 	return (
 		<div className="inline-block relative">

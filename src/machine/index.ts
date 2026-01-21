@@ -31,12 +31,12 @@ const TableEditorMachine = setup({
 						.fill(0)
 						.map((_, i) => String(i));
 
-					draftSchema.rowsById = draftSchema.colOrder.reduce(
+					draftSchema.rowsById = draftSchema.rowOrder.reduce(
 						(acc, curr) => {
 							acc[curr] = {
 								id: curr,
 								style: {
-									height: 20,
+									height: 50,
 								},
 							};
 
