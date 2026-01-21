@@ -9,7 +9,7 @@ import GridRow from "./grid-row";
 type TableEditorProps = MachineInput;
 
 const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
-	const [sp, , actorRef] = useMachine(TableEditorMachine, {
+	const [sp, send, actorRef] = useMachine(TableEditorMachine, {
 		input: {
 			defaultColumns,
 			defaultRows,
@@ -27,6 +27,14 @@ const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
 		actorRef,
 	});
 	console.log({ sp });
+
+	const handleAddColumn = () => {
+		send({ type: "add.col" });
+	};
+
+	const handleAddRow = () => {
+		send({ type: "add.row" });
+	};
 
 	return (
 		<div className="inline-block relative">
@@ -70,12 +78,14 @@ const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
 			<div
 				id="table-handlebar-col"
 				className="transition-all opacity-0 hover:opacity-100 hover:bg-gray-300/30 rounded h-full w-4 absolute top-0 left-full ml-2 flex flex-col justify-center items-center cursor-pointer"
+				onClick={handleAddColumn}
 			>
 				<span className="text-gray-600 select-none">+</span>
 			</div>
 			<div
 				id="table-handlebar-row"
 				className="transition-all opacity-0 hover:opacity-100 hover:bg-gray-300/30 rounded h-5 w-full absolute left-0 mt-2 flex justify-center items-center cursor-pointer"
+				onClick={handleAddRow}
 			>
 				<span className="text-gray-600 select-none">+</span>
 			</div>

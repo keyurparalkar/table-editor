@@ -1,11 +1,11 @@
 import type { CSSProperties } from "react";
 
-type Row = {
+export type Row = {
 	id: string;
 	style?: Partial<CSSProperties>;
 };
 
-type Column = {
+export type Column = {
 	id: string;
 	name: string;
 	style?: Partial<CSSProperties>;
