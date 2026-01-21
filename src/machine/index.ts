@@ -36,7 +36,7 @@ const TableEditorMachine = setup({
 							acc[curr] = {
 								id: curr,
 								style: {
-									height: 10,
+									height: 20,
 								},
 							};
 
@@ -51,7 +51,7 @@ const TableEditorMachine = setup({
 								id: curr,
 								name: "",
 								style: {
-									width: 100,
+									width: 400,
 								},
 							};
 
