@@ -2,12 +2,12 @@ import { assign, log, setup } from "xstate";
 import type { MachineContext } from "../domain/context";
 import type { MachineInput } from "../domain/input";
 import { produce } from "immer";
-import type { Row } from "../domain/schema";
 
 const TableEditorMachine = setup({
 	types: {
 		context: {} as MachineContext,
 		input: {} as MachineInput,
+		// TODO(Keyur): Add events typing to here based on the below events such as add.table.entities
 	},
 	actions: {
 		initTable: assign({
@@ -83,13 +83,6 @@ const TableEditorMachine = setup({
 				const { schema } = context;
 
 				return produce(schema, (draftSchema) => {
-					/**
-					 * This is where the magic happens:
-					 * - We create a rowOrder and ColumnOrder by filling it with ids. At the current moment they can be indices
-					 * - Then we fill up the colsByID and rowsById objects
-					 * - Then we fill up cells with empty states
-					 */
-
 					const len = draftSchema.rowOrder.length;
 
 					draftSchema.rowOrder.push(String(len));
@@ -137,6 +130,10 @@ const TableEditorMachine = setup({
 					};
 
 					schema?.rowOrder?.forEach((rO) => {
+						/**
+						 * Use the rowOrder from original context rather than draftContext
+						 * because colOrder is the one that is getting changed and colOrder remains unchanged.
+						 */
 						draftSchema?.colOrder?.forEach((cO) => {
 							const cellKey =
 								`${rO}:${cO}` as keyof MachineContext["schema"]["cells"];
@@ -187,27 +184,52 @@ const TableEditorMachine = setup({
 
 		ready: {
 			on: {
-				"add.row": {
-					target: "addingRow",
-				},
-
-				"add.col": {
-					target: "addingCol",
+				"add.table.entities": {
+					target: "addingTableEntities",
 				},
 			},
 		},
 
-		addingRow: {
-			always: {
-				actions: [log("Adding row"), "addRow"],
-				target: "ready",
-			},
-		},
+		/**
+		 * Entities are objects that impact the table editor's state.
+		 * There are multiple types of entities:
+		 * - Table entities - They deal with structural changes to the editor's state like add, removing, resizing, etc rows & cols.
+		 * - Cell entities - They deal with the structural changes related to cell
+		 */
+		addingTableEntities: {
+			initial: "decideOp",
+			states: {
+				decideOp: {
+					always: [
+						{
+							guard: ({ event }) => event.payload.type === "row",
+							target: "addingRow",
+						},
+						{
+							target: "addingCol",
+						},
+					],
+				},
+				addingRow: {
+					always: {
+						actions: [log("Adding row"), "addRow"],
+						target: "complete",
+					},
+				},
 
-		addingCol: {
-			always: {
-				actions: [log("Adding col"), "addCol"],
-				target: "ready",
+				addingCol: {
+					always: {
+						actions: [log("Adding col"), "addCol"],
+						target: "complete",
+					},
+				},
+
+				complete: {
+					type: "final",
+				},
+			},
+			onDone: {
+				target: "#table-editor-machine.ready",
 			},
 		},
 	},

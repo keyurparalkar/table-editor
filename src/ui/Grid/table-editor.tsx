@@ -29,11 +29,21 @@ const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
 	console.log({ sp });
 
 	const handleAddColumn = () => {
-		send({ type: "add.col" });
+		send({
+			type: "add.table.entities",
+			payload: {
+				type: "col",
+			},
+		});
 	};
 
 	const handleAddRow = () => {
-		send({ type: "add.row" });
+		send({
+			type: "add.table.entities",
+			payload: {
+				type: "row",
+			},
+		});
 	};
 
 	return (
@@ -77,14 +87,14 @@ const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
 			{/** Handle bars for add rows/columns */}
 			<div
 				id="table-handlebar-col"
-				className="transition-all opacity-0 hover:opacity-100 hover:bg-gray-300/30 rounded h-full w-4 absolute top-0 left-full ml-2 flex flex-col justify-center items-center cursor-pointer"
+				className="transition-all opacity-0 hover:opacity-100 hover:bg-gray-300/30 rounded h-full w-5 absolute top-0 left-full ml-2 flex flex-col justify-center items-center cursor-pointer"
 				onClick={handleAddColumn}
 			>
 				<span className="text-gray-600 select-none">+</span>
 			</div>
 			<div
 				id="table-handlebar-row"
-				className="transition-all opacity-0 hover:opacity-100 hover:bg-gray-300/30 rounded h-5 w-full absolute left-0 mt-2 flex justify-center items-center cursor-pointer"
+				className="transition-all opacity-0 hover:opacity-100 hover:bg-gray-300/30 rounded h-6 w-full absolute left-0 mt-2 flex justify-center items-center cursor-pointer"
 				onClick={handleAddRow}
 			>
 				<span className="text-gray-600 select-none">+</span>
