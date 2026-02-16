@@ -37,8 +37,6 @@ type CellMeta = {
 type Cell = CellValue & CellMeta;
 
 export type Schema = {
-	version: number;
-
 	/**
      * These are the orders that the user sees on the table.
      * We store the col and row order in this way because:

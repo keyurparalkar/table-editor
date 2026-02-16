@@ -5,7 +5,7 @@ function App() {
 		<div>
 			<h1 className="text-4xl font-bold text-gray-900">Table Editor</h1>
 			<br />
-			<TableEditor defaultColumns={3} defaultRows={9} />
+			<TableEditor defaultColumns={3} defaultRows={3} />
 		</div>
 	);
 }

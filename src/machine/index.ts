@@ -1,7 +1,7 @@
-import { assign, log, setup } from "xstate";
+import { produce } from "immer";
+import { assign, setup } from "xstate";
 import type { MachineContext } from "../domain/context";
 import type { MachineInput } from "../domain/input";
-import { produce } from "immer";
 
 const TableEditorMachine = setup({
 	types: {
@@ -37,7 +37,7 @@ const TableEditorMachine = setup({
 							acc[curr] = {
 								id: curr,
 								style: {
-									height: 50,
+									height: 20,
 								},
 							};
 
@@ -52,7 +52,7 @@ const TableEditorMachine = setup({
 								id: curr,
 								name: "",
 								style: {
-									width: 400,
+									width: 100,
 								},
 							};
 
@@ -90,7 +90,7 @@ const TableEditorMachine = setup({
 					draftSchema.rowsById[len] = {
 						id: String(len),
 						style: {
-							height: 50,
+							height: 20,
 						},
 					};
 
@@ -125,7 +125,7 @@ const TableEditorMachine = setup({
 						id: String(len),
 						name: "",
 						style: {
-							width: 400,
+							width: 100,
 						},
 					};
 
@@ -148,6 +148,9 @@ const TableEditorMachine = setup({
 			},
 		}),
 	},
+	guards: {
+		isAddingRow: ({ event }) => event.payload.type === "row",
+	},
 }).createMachine({
 	/** @xstate-layout N4IgpgJg5mDOIC5gF8A0IB2B7CdGgBcBDAIwBswBaSASwKwCdKBbIgYwAsaMx8QAHLLDo0sGPgA9ElAGzoAntJnI0IYuSq16TVp25gAdNzp9BwgqPFIQUhABYATAsQAOAIwGAzA4cBOB54A7I6Bvm6evioqQA */
 	id: "table-editor-machine",
@@ -157,8 +160,6 @@ const TableEditorMachine = setup({
 			columns: input.defaultColumns,
 		},
 		schema: {
-			version: 0,
-
 			rowOrder: [],
 			colOrder: [],
 
@@ -202,7 +203,7 @@ const TableEditorMachine = setup({
 				decideOp: {
 					always: [
 						{
-							guard: ({ event }) => event.payload.type === "row",
+							guard: "isAddingRow",
 							target: "addingRow",
 						},
 						{
@@ -212,14 +213,14 @@ const TableEditorMachine = setup({
 				},
 				addingRow: {
 					always: {
-						actions: [log("Adding row"), "addRow"],
+						actions: ["addRow"],
 						target: "complete",
 					},
 				},
 
 				addingCol: {
 					always: {
-						actions: [log("Adding col"), "addCol"],
+						actions: ["addCol"],
 						target: "complete",
 					},
 				},

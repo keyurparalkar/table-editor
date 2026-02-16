@@ -9,7 +9,7 @@ import GridRow from "./grid-row";
 type TableEditorProps = MachineInput;
 
 const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
-	const [sp, send, actorRef] = useMachine(TableEditorMachine, {
+	const [_, send, actorRef] = useMachine(TableEditorMachine, {
 		input: {
 			defaultColumns,
 			defaultRows,
@@ -26,7 +26,6 @@ const TableEditor = ({ defaultColumns, defaultRows }: TableEditorProps) => {
 	} = useGetTableProperties({
 		actorRef,
 	});
-	console.log({ sp });
 
 	const handleAddColumn = () => {
 		send({
